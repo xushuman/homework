@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="button" id="btn" value="点击">
+    <ul id="ul1"></ul>
+    <!--   空的ul 显示数据-->
+
+</body>
+<script>
+    var btn = document.getElementById("btn")
+    btn.onclick = function() {
+        var xhr = new XMLHttpRequest(); //创建对象 放到点击内外都行
+        xhr.open('GET', "getNews.php", true)
+        xhr.send() //发送请求
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    var oul = document.getElementById("ul1");
+                    var html = ""
+                    for (var i = 0; i < data.length; i++) {
+
+                        html += '<li><a href="">' + data[i].title + '</a>[<span>' + data[i].date + '</span>]</li>'
+                    }
+                    oul.innerHTML = html
+                } else {
+                    alert("Error" + xhr.status)
+                }
+            }
+        }
+    }
+
+</script>
+
+</html>
